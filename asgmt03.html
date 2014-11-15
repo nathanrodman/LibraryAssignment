@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/java assignment.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- template parameters -->
+<!-- InstanceParam name="asgmtVersion" type="text" value="3" -->
+<title>CS261 Assignment 3</title>
+<style type="text/css">
+<!--
+.code {
+	font-family: Consolas, "Courier New", Courier, monospace;
+	font-size: 14px;
+}
+.header {
+	font-family: Cambria, Georgia, "Times New Roman", Times, serif;
+	font-size: 20px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+.text {
+	font-family: Cambria, Georgia, "Times New Roman", Times, serif;
+	font-size: medium;
+	font-style: normal;
+}
+.title {
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: underline;
+	font-family: Cambria, Georgia, "Times New Roman", Times, serif;
+}
+.tableCellBg {
+	background-color: #FDE7D9;
+}
+-->
+</style>
+</head>
+<body class="text">
+<p class="title">CS261 Assignment 3 Instructions</p>
+<p class="header">Code To Start With</p>
+<p>This assignment provides a you with a .zip file containing the code you should start with. The .zip file will expand into a folder that is set up to be both a BlueJ project and an Eclipse project.</p>
+<p><span class="header">JAR Files</span> </p>
+<p>Java executables are packaged as JAR (<strong>J</strong>ava <strong>AR</strong>chive) files. A JAR file is actually a Zip file. You can open a JAR file with any Zip utility (e.g. <a href="http://7-zip.org/" target="_blank">7-Zip</a>). Once you&rsquo;re ready to submit your work, you will need to create a JAR file containing your code. Both BlueJ and Eclipse have the ability to do this (see the <strong>How To Create a JAR File...</strong> sections below). In order for your work to be graded, your JAR file must be executable from the command line.</p>
+<p>Each JAR file contains a folder named <strong>META-INF</strong>. This folder contains a file named <strong>MANIFEST.MF</strong>, which is the JAR file&rsquo;s &ldquo;manifest file.&rdquo; The manifest file is a text file that specifies which Java class in the JAR file contains the<span class="code"> main()</span> method. The Java Virtual Machine needs this information in order to be able to run your code from the command line.</p>
+<p> You should not change the structure of your project folder <em>in any way</em>. Do not rename files, do not move files to a different folder, do not create new folders or files, etc. I grade your code using a Python script that depends on files and folders being in the expected places.</p>
+<!-- InstanceBeginEditable name="description" -->
+<p class="header">Database of Media Items</p>
+<p>In this assignment, you will implement a database for a library. This library stores three types of media items:</p>
+<ul>
+  <li>books</li>
+  <li>music albums</li>
+  <li>movies</li>
+</ul>
+<p style="font-style: italic">The choice of items  included in the library database reflects either the instructor&rsquo;s superior taste, his advanced age, or perhaps both.</p>
+<span class="header"></span>
+You will start with <strong>asgmt03.zip</strong>, which contains six Java source files:
+<ul>
+  <li>Assignment3.java
+    <ul>
+        <li><em>make no changes to this code, except to have it print your actual name instead of &ldquo;your name&rdquo;. </em></li>
+    </ul>
+  </li>
+  <li>Library.java</li>
+  <li>Item.java, <em>which has the following subclasses:</em>
+    <ul>
+      <li>Book.java</li>
+      <li>MusicAlbum.java</li>
+      <li>Movie.java</li>
+    </ul>
+  </li>
+</ul>
+<p>Library.java, Item.java, Book.java, MusicAlbum.java, and Movie.java are in a Java package named &ldquo;library.&rdquo; In the project folder, thay are contained in a subfolder with the same name as the package.</p>
+<p>Library.java contains the methods that are used by Assignment3.java. As provided, Library.java contains a stub implementation for each method. (A &ldquo;stub&rdquo; is a method definition with no code in it, other than<span class="code"> return null; </span>for methods that return a reference.)</p>
+<p><em>You should not add new .java files to this project, and you should not remove any of the provided .java files from this project.</em> </p>
+<p>Your task for this assignment is to write code for the method stubs in Library.java to implement the database functionality. In addition, you will need to add code to Item.java and its subclasses to support the Library class as it stores and retrieves data about the various items. Your code should exhibit <em>high cohesion</em> &#8211; the code in each class should do things that match what the physical item corresponding to that class would do in the real world. <span class="code">Item</span>, for instance would not be the place to store (or make some use of) a book&rsquo;s number of pages.</p>
+Once you have properly implemented the database functionality, your code&rsquo;s output should be identical to the contents of one of the provided text output file (<strong>asgmt03.out.txt</strong>). This will require all of your output lists (including keywords, band members, movie casts) to be sorted alphabetically. Lists of Items should be sorted by <span style="font-style: italic">title</span>.
+<p>Make sure to do all of your printing from the appropriate place, as defined by object-oriented design. This would include your items&rsquo; <span class="code">toString()</span> methods. </p>
+<p>As you define fields for the various classes in this assignment, make sure to give each of them the appropriate access modifier (e.g. <span class="code">private</span>, <span class="code">protected</span>, <span class="code">public</span>, or none (which means &ldquo;package protected&rdquo;).</p>
+<p>You should use the Java Collections Framework where appropriate &ndash; do not reinvent that wheel for this assignment. </p>
+<p>For this assignment you should code for &ldquo;high performance,&rdquo; meaning fast access. This means that you should choose components of   the Collections Framework that support the highest possible speed consistent with the tasks your code needs to perform. To put this another way, <em>do not do linear searches when a faster method is available in the Collections Framework.</em> For example, the set of items for a particular keyword should not be collected by a linear search through all of the items contained in the library.</p>
+<p style="font-style: italic"><span class="header">Regular Assignment </span></p>
+<p><i>There is no Premium version for this assignment</i> <br /></p>
+<p>
+Write the requested code and get it to work. <p>Your output must be <em>identical</em> to <strong>asgmt03.out.txt</strong>.</p>
+<p class="header">Required JAR File Structure</p>
+<p>Here is the required structure for the .jar file that you will submit for either version of this assignment:</p>
+<table width="90%">
+  <tr>
+    <td align="left" valign="top"><ul>
+      <li><em>.jar file</em>
+        <ul>
+          <li>Assignment3.java</li>
+          <li>Assignment3.class</li>
+          <li>library</li>
+          	<ul>
+              <li>Library.java</li>
+              <li>Library.class</li>
+              <li>Item.java</li>
+              <li>Item.class</li>
+              <li>Book.java</li>
+              <li>Book.class</li>
+              <li>MusicAlbum.java</li>
+              <li>MusicAlbum.class</li>
+              <li>Movie.java</li>
+              <li>Movie.class</li>
+          	</ul>
+          <li>META-INF
+            <ul>
+              <li>MANIFEST.MF</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul></td>
+    <td align="left" valign="top" width="20">&nbsp;</td>
+    <td align="left" valign="top"><p>&nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<em>(folder)</em><br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      &nbsp;<br />
+      <br />
+      <br />
+      <em>(folder)</em><br />
+      <em>manifest file created by your IDE &#8211; specifies the class containing the</em><span class="code"> main()</span><em> method</em></p></td>
+  </tr>
+</table>
+<p>You can use any Zip utility (e.g. <a href="http://7-zip.org/" target="_blank">7-Zip</a>) to check the structure of your .jar file.</p>
+<!-- InstanceEndEditable --><span class="header">How To Create a JAR File in BlueJ </span>
+<p>To create a <span class="style1">.jar </span>file from a BlueJ project, do the following:</p>
+<ol>
+  <li>&ldquo;Project&rdquo; menu, &ldquo;Create Jar File &rdquo; command (was &ldquo;Export...&rdquo; in older versions of BlueJ) </li>
+  <li>choose &ldquo;Store as jar file&rdquo;</li>
+  <li>main class: choose the class that defines the <strong>main</strong> method</li>
+  <li>check &ldquo;include source&rdquo; (if you don&rsquo;t do this, your .java files will not be included and your work will not be graded) </li>
+  <li>click &ldquo;Continue&rdquo;</li>
+  <li>choose a name and a place for the JAR file</li>
+</ol>
+<span class="header">How To Create a JAR File in Eclipse </span>
+<p>To create a <span class="style1">.jar </span>file from an  Eclipse project, do the following:</p>
+<ol>
+  <li>in the Project Explorer view, click the small triangle to the left of your project, which will open an outline view</li>
+  <li>right click on the .jardesc (JAR DESCription) file</li>
+  <li>click on &ldquo;Create JAR&rdquo;</li>
+</ol>
+<p>The .jar file will be created in your project folder. Each assignment project for this course will include a .jardesc file.</p>
+<span class="header"></span><!-- #BeginLibraryItem "/Library/submit asgmt to D2L.lbi" -->
+<!-- This library item is designed for use with either "java assignment.dwt" or "cpp assignment.dwt".
+	 It requires that .header be defined in the CSS of the .dwt file -->
+<!-- uses .header from the .dwt file's CSS -->
+<span class="header">To Submit This Assignment</span>
+<p>Submit the requested file to Desire2Learn. &nbsp; Make sure that your code prints your name, assignment description, and number, as requested. </p>
+<ul>
+  <li>Be  certain to check that you completed the upload successfully. After you click  the Upload File button, you must also click the <strong>SUBMIT ASSIGNMENT </strong>button. This  is very easy to forget. If you do not do this, I will not see your work and you will get a grade of zero for the assignment. I would recommend entering an  email address so you can be notified that the upload was completed  successfully.</li>
+  <li>You  may upload as many versions as you wish prior to the due date. I will only see  and grade the final one. You will not be able to upload assignments after due date.</li>
+  <li>Points will be deducted for uploading a file with a name that is not as specified. Every term I get a few students whose approach to following directions is, shall we say, &ldquo;creative.&rdquo; I encourage creativity in general, but there are places where it is <u>not appropriate</u>.</li>
+</ul>
+<!-- #EndLibraryItem -->
+<p>&nbsp;</p>
+</body>
+<!-- InstanceEnd --></html>
