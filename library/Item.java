@@ -8,18 +8,13 @@ import java.util.*;
 
 public abstract class Item
 {
-	private enum Type {
-		BOOK, ALBUM, MOVIE
-	}
-	
 	private String title;
-	private Type type;
 	private List<String> keywords = new ArrayList<String>();
 	
 	public Item()
 	{
-		title = "no title";
-		type = null;
+		title = null;
+		keywords = null;
 	}
 	
 	public Item(String theTitle)
@@ -27,5 +22,42 @@ public abstract class Item
 		title = theTitle;
 	}
 	
+	public Item(String theTitle, String...keyword)
+	{
+		title = theTitle;
+		for(String s : keyword)
+			keywords.add(s);
+	}
+	
+	public void setTitle(String aTitle)
+	{
+		title = aTitle;
+	}
+	
+	public String getTitle()
+	{
+		return title;
+	}
+	
+	public void addKeyWords(String ... keyword)
+	{
+		for(String s : keyword)
+			keywords.add(s);
+	}
+	
+	public List<String> getKeyWords()
+	{
+		return keywords;
+	}
+	
+	public Boolean containsKeyWord(String keyword)
+	{
+		for(String s : keywords)
+		{
+			if (s == keyword)
+				return true;
+		}
+		return false;
+	}
 	
 }

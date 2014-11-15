@@ -8,11 +8,19 @@ import java.util.*;
 public class Library
 {
 	// general methods
+	private List<Item> items = new ArrayList<Item>();
 	
 	// returns all of the items which have the specified keyword
 	public Collection<Item> itemsForKeyword(String keyword)
 	{
 		List<Item> matches = new ArrayList<Item>();
+		
+		for (Item i : items)
+		{
+			if(i.containsKeyWord(keyword))
+				matches.add(i);
+		}
+		
 		return matches;
 	}
 	
