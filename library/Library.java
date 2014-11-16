@@ -66,6 +66,7 @@ public class Library
 	// adds the specified band members to a music album
 	public void addBandMembers(Item album, String... members)
 	{
+		album.addPeople(members);
 	}
 	
 	// removes a music album from the library
@@ -97,12 +98,15 @@ public class Library
 	// adds a movie to the library
 	public Item addMovie(String title, String director, int nScenes, String... keywords)
 	{
-		return null;
+		Movie amovie = new Movie(title, director, nScenes, keywords);
+		amovie.movie = true;
+		return amovie;
 	}
 
 	// adds the specified actors to a movie
 	public void addCast(Item movie, String... members)
 	{
+		movie.addPeople(members);
 	}
 
 	// removes a movie from the library
