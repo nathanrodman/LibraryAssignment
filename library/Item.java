@@ -11,11 +11,13 @@ public abstract class Item
 {
 	private String title = new String();
 	private List<String> keywords = new ArrayList<String>();
+	private List<String> people = new ArrayList<String>();
 	
 	public Item()
 	{
 		title = null;
 		keywords = null;
+		people = null;
 	}
 	
 	public Item(String theTitle, String...keywords)
@@ -69,6 +71,17 @@ public abstract class Item
 			i++;
 		}
 		out.printf("%n");
+	}
+	
+	public void addPeople(String...people)
+	{
+		for(String s : people)
+			this.people.add(s);
+	}
+	
+	public List<String> getPeople()
+	{
+		return people;
 	}
 	
 }

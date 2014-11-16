@@ -8,7 +8,6 @@ class Movie
 {
 	private String director;
 	private int scenes;
-	private List<String> cast = new ArrayList<String>();
 	
 	public Movie()
 	{
@@ -24,8 +23,7 @@ class Movie
 	
 	public void addCast(String...theCast)
 	{
-		for (String s : theCast)
-			cast.add(s);
+		super.addPeople(theCast);
 	}
 	
 	public void print(PrintStream out)
@@ -34,6 +32,8 @@ class Movie
 		out.printf("director: %s%n", director);
 		out.printf("# scences: %d%n", scenes);
 		out.printf("cast: ");
+		
+		List<String> cast = new ArrayList<String>(super.getPeople());
 		int i = 1;
 		for(String s : cast)
 		{
@@ -45,4 +45,5 @@ class Movie
 		out.printf("%n");
 		super.print(out);
 	}
+	
 }
