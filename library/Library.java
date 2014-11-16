@@ -27,6 +27,7 @@ public class Library
 	// print an item from this library to the output stream provided
 	public void printItem(PrintStream out, Item item)
 	{
+		item.print(out);
 	}
 	
 	// book-related methods
@@ -34,7 +35,8 @@ public class Library
 	// adds a book to the library
 	public Item addBook(String title, String author, int nPages, String... keywords)
 	{
-		return null;
+		Book book = new Book(title, author, nPages, keywords);
+		return book;
 	}
 	
 	// removes a book from the library

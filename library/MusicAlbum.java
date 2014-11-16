@@ -1,5 +1,6 @@
 package library;
 
+import java.io.PrintStream;
 import java.util.*;
 
 class MusicAlbum
@@ -49,5 +50,25 @@ class MusicAlbum
 	public List<String> getMembers()
 	{
 		return super.getPeople();
+	}
+	
+	public void print(PrintStream out)
+	{
+		out.println("-Music Album-");
+		out.printf("band: %s%n", bandName);
+		out.printf("# songs: %d%n", tracks);
+		out.printf("members: ");
+		List<String> members = new ArrayList<String>(super.getPeople());
+		int i = 1;
+		for(String s : members)
+		{
+			out.printf("%s", s);
+			if (i != members.size())
+				out.printf(", ");
+			i++;
+		}
+		out.printf("%n");
+		super.print(out);
+		
 	}
 }

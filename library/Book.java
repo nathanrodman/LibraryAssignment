@@ -1,5 +1,7 @@
 package library;
 
+import java.io.PrintStream;
+
 class Book
 	extends Item
 {
@@ -37,6 +39,14 @@ class Book
 	public void setAuthor(String anAuthor)
 	{
 		author = anAuthor;
+	}
+	
+	public void print(PrintStream out)
+	{
+		out.println("-Book-");
+		out.printf("author: %s", author);
+		out.printf("# pages: %d", pages);
+		super.print(out);
 	}
 
 }
