@@ -60,7 +60,9 @@ public class Library
 	// adds a music album to the library
 	public Item addMusicAlbum(String title, String band, int nSongs, String... keywords)
 	{
-		return null;
+		MusicAlbum album = new MusicAlbum(title, band, nSongs, keywords);
+		album.album = true;
+		return album;
 	}
 
 	// adds the specified band members to a music album
