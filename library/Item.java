@@ -8,37 +8,9 @@ import java.util.*;
 
 public abstract class Item
 {
-	private String title;
+
 	private List<String> keywords = new ArrayList<String>();
-	
-	public Item()
-	{
-		title = null;
-		keywords = null;
-	}
-	
-	public Item(String theTitle)
-	{
-		title = theTitle;
-	}
-	
-	public Item(String theTitle, String...keyword)
-	{
-		title = theTitle;
-		for(String s : keyword)
-			keywords.add(s);
-	}
-	
-	public void setTitle(String aTitle)
-	{
-		title = aTitle;
-	}
-	
-	public String getTitle()
-	{
-		return title;
-	}
-	
+
 	public void addKeyWords(String ... keyword)
 	{
 		for(String s : keyword)
@@ -59,5 +31,6 @@ public abstract class Item
 		}
 		return false;
 	}
+	
 	
 }
