@@ -19,6 +19,7 @@ class Movie
 		super(title, keyword);
 		this.director = director;
 		this.scenes = noOfScenes;
+		movie = true;
 	}
 	
 	public void addCast(String...theCast)

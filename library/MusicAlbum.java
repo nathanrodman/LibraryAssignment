@@ -18,6 +18,7 @@ class MusicAlbum
 		super(albumtitle, keywords);
 		bandName = band;
 		tracks = nTracks;
+		album = true;
 	}
 	
 	public void setBandName(String band)

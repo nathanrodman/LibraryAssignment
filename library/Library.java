@@ -61,7 +61,6 @@ public class Library
 	public Item addMusicAlbum(String title, String band, int nSongs, String... keywords)
 	{
 		MusicAlbum album = new MusicAlbum(title, band, nSongs, keywords);
-		album.album = true;
 		return album;
 	}
 
@@ -101,7 +100,6 @@ public class Library
 	public Item addMovie(String title, String director, int nScenes, String... keywords)
 	{
 		Movie amovie = new Movie(title, director, nScenes, keywords);
-		amovie.movie = true;
 		return amovie;
 	}
 

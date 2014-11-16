@@ -12,9 +12,9 @@ public abstract class Item
 	private String title = new String();
 	private List<String> keywords = new ArrayList<String>();
 	private List<String> people = new ArrayList<String>();
-	public Boolean movie = false;
-	public Boolean book = false;
-	public Boolean album = false;
+	protected Boolean movie = false;
+	protected Boolean book = false;
+	protected Boolean album = false;
 	
 	public Item()
 	{
