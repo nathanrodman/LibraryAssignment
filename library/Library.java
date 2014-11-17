@@ -1,14 +1,16 @@
 package library;
 
 import java.io.PrintStream;
-import java.util.Collection;
-import java.util.List;
 import java.util.*;
 
 public class Library
 {
 	// general methods
 	private List<Item> items = new ArrayList<Item>();
+	private TreeSet<Book> books = new TreeSet<Book>();
+	private TreeSet<MusicAlbum> albums = new TreeSet<MusicAlbum>();
+	private TreeSet<Movie> movies = new TreeSet<Movie>();
+	
 	
 	// returns all of the items which have the specified keyword
 	public Collection<Item> itemsForKeyword(String keyword)
@@ -36,25 +38,46 @@ public class Library
 	public Item addBook(String title, String author, int nPages, String... keywords)
 	{
 		Book book = new Book(title, author, nPages, keywords);
+		books.add(book);
 		return book;
 	}
 	
 	// removes a book from the library
 	public boolean removeBook(String title)
 	{
+		for(Item b : books)
+		{
+			if(b.getTitle() == title)
+			{
+				books.remove(b);
+				items.remove(b);
+				return true;
+			}
+		}
 		return false;
 	}
 	
 	// returns all of the books by the specified author
 	public Collection<Item> booksByAuthor(String author)
 	{
-		return null;
+		List<Item> byAuthor = new ArrayList<Item>();
+		for (Book b : books)
+		{
+			if(b.getAuthor() == author)
+			{
+				byAuthor.add(b);
+			}
+		}
+		return byAuthor;
 	}
 	
 	// returns all of the books in the library
 	public Collection<Item> books()
 	{
-		return null;
+		List<Item> allBooks = new ArrayList<Item>();
+		allBooks.addAll(books);
+		
+		return allBooks;
 	}
 	
 	// music-related methods
@@ -63,6 +86,7 @@ public class Library
 	public Item addMusicAlbum(String title, String band, int nSongs, String... keywords)
 	{
 		MusicAlbum album = new MusicAlbum(title, band, nSongs, keywords);
+		albums.add(album);
 		return album;
 	}
 
@@ -102,6 +126,7 @@ public class Library
 	public Item addMovie(String title, String director, int nScenes, String... keywords)
 	{
 		Movie amovie = new Movie(title, director, nScenes, keywords);
+		movies.add(amovie);
 		return amovie;
 	}
 
