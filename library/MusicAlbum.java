@@ -47,7 +47,7 @@ class MusicAlbum
 		super.addPeople(members);
 	}
 	
-	public List<String> getMembers()
+	public Collection<String> getMembers()
 	{
 		return super.getPeople();
 	}

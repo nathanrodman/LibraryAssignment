@@ -50,25 +50,34 @@ public class Library
 	// removes a book from the library
 	public boolean removeBook(String title)
 	{
-		//Item bookToRemove = new Book();
+		Item bookToRemove = new Book();
 		if(items.containsKey(title))
 		{
-			/*bookToRemove = */items.remove(title);
-/*			List<String> keywords = new ArrayList<String>(bookToRemove.getKeyWords());
-			List<Item> itemsInKeywords = new ArrayList<Item>();
-			for(String k : keywords)
+			bookToRemove = items.remove(title);
+			for(String k : bookToRemove.getKeyWords())
 			{
-				itemsInKeywords = byKeyword.get(k);
-				for (Item i : itemsInKeywords)
+				List<Item> itemsbykeyword = new ArrayList<Item>();
+				itemsbykeyword = byKeyword.remove(k);
+				for (Item i : itemsbykeyword)
 				{
-					if(i.book)
-					{
-						itemsInKeywords.remove(i);
-					}
+					if(i.getTitle() == bookToRemove.getTitle())
+						itemsbykeyword.remove(i);
+					if(!itemsbykeyword.isEmpty())
+						byKeyword.put(k, itemsbykeyword);
 				}
-				byKeyword.put(k, itemsInKeywords);
+				
 			}
-	*/
+			//Removing from the byAuthor list
+			String author = new String(((Book) bookToRemove).getAuthor());
+			List<Item> booksbyauthor = new ArrayList<Item>();
+			booksbyauthor = byAuthor.remove(author);
+			for(Item i : booksbyauthor)
+			{
+				if(i == bookToRemove)
+					booksbyauthor.remove(i);
+			}
+			byAuthor.put(author, booksbyauthor);
+			
 		}
 		else
 			return false;
@@ -173,7 +182,7 @@ public class Library
 				itemsInKeywords = byKeyword.get(k);
 				for (Item i : itemsInKeywords)
 				{
-					if(i.book)
+					if(i.movie)
 					{
 						itemsInKeywords.remove(i);
 					}

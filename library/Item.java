@@ -10,8 +10,8 @@ import java.util.*;
 public abstract class Item
 {
 	private String title = new String();
-	private Set<String> keywords = new HashSet<String>();
-	private List<String> people = new ArrayList<String>();
+	private Set<String> keywords = new TreeSet<String>();
+	private Set<String> people = new TreeSet<String>();
 	protected Boolean movie = false;
 	protected Boolean book = false;
 	protected Boolean album = false;
@@ -77,7 +77,7 @@ public abstract class Item
 			this.people.add(s);
 	}
 	
-	public List<String> getPeople()
+	public Collection<String> getPeople()
 	{
 		return people;
 	}
