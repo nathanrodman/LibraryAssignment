@@ -68,7 +68,7 @@ public abstract class Item
 				out.printf(", ");
 			i++;
 		}
-		out.printf("%n");
+		out.printf("%n%n");
 	}
 	
 	public void addPeople(String...people)

@@ -6,25 +6,24 @@ import java.util.*;
 public class Library
 {
 	// general methods
-	private List<Item> items = new ArrayList<Item>();
+	private Map<String, Item> items = new HashMap<String, Item>();
 	private List<Book> books = new ArrayList<Book>();
 	private List<MusicAlbum> albums = new ArrayList<MusicAlbum>();
 	private List<Movie> movies = new ArrayList<Movie>();
+	
+	// HashMaps by certain key values
 	private Map<String, List<Item>> byKeyword = new HashMap<String, List<Item>>();
+	private Map<String, List<Item>> byAuthor = new HashMap<String, List<Item>>();
+	private Map<String, List<Item>> byBandName = new HashMap<String, List<Item>>();
+	private Map<String, List<Item>> byBandMembers = new HashMap<String, List<Item>>();
+	private Map<String, List<Item>> byDirector = new HashMap<String, List<Item>>();
+	private Map<String, List<Item>> byCastMember = new HashMap<String, List<Item>>();
 	
 	
 	// returns all of the items which have the specified keyword
 	public Collection<Item> itemsForKeyword(String keyword)
 	{
-		List<Item> matches = new ArrayList<Item>();
-		
-		for (Item i : items)
-		{
-			if(i.containsKeyWord(keyword))
-				matches.add(i);
-		}
-		
-		return matches;
+		return byKeyword.get(keyword);
 	}
 	
 	// print an item from this library to the output stream provided
@@ -40,9 +39,10 @@ public class Library
 	{
 		Book book = new Book(title, author, nPages, keywords);
 		books.add(book);
-		
-		//Adds to a HashMap sorted by keywords
-		addByKeyword(book, keywords);
+
+		hashByAttribute(byKeyword, book, keywords);
+		hashByAttribute(byAuthor, book, author);
+		items.put(title, book);
 		
 		return book;
 	}
@@ -50,31 +50,35 @@ public class Library
 	// removes a book from the library
 	public boolean removeBook(String title)
 	{
-		for(Item b : books)
+		//Item bookToRemove = new Book();
+		if(items.containsKey(title))
 		{
-			if(b.getTitle() == title)
+			/*bookToRemove = */items.remove(title);
+/*			List<String> keywords = new ArrayList<String>(bookToRemove.getKeyWords());
+			List<Item> itemsInKeywords = new ArrayList<Item>();
+			for(String k : keywords)
 			{
-				books.remove(b);
-				items.remove(b);
-				return true;
+				itemsInKeywords = byKeyword.get(k);
+				for (Item i : itemsInKeywords)
+				{
+					if(i.book)
+					{
+						itemsInKeywords.remove(i);
+					}
+				}
+				byKeyword.put(k, itemsInKeywords);
 			}
+	*/
 		}
-		return false;
+		else
+			return false;
+		return true;
 	}
 	
 	// returns all of the books by the specified author
 	public Collection<Item> booksByAuthor(String author)
 	{
-		List<Item> byAuthor = new ArrayList<Item>();
-		Map<String, List<Item>> containsAuthor = new HashMap<String, List<Item>>();
-		for (Book b : books)
-		{
-			String anAuthor = b.getAuthor();
-		}
-				
-		
-
-		return byAuthor;
+		return byAuthor.get(author);
 	}
 	
 	// returns all of the books in the library
@@ -82,7 +86,6 @@ public class Library
 	{
 		List<Item> allBooks = new ArrayList<Item>();
 		allBooks.addAll(books);
-
 		
 		return allBooks;
 	}
@@ -96,7 +99,9 @@ public class Library
 		albums.add(album);
 	
 		//Adds to a HashMap sorted by keywords
-		addByKeyword(album, keywords);
+		hashByAttribute(byKeyword, album, keywords);
+		hashByAttribute(byBandName, album, band);
+		items.put(title, album);
 		
 		return album;
 	}
@@ -105,6 +110,7 @@ public class Library
 	public void addBandMembers(Item album, String... members)
 	{
 		album.addPeople(members);
+		hashByAttribute(byBandMembers, album, members);
 	}
 	
 	// removes a music album from the library
@@ -116,19 +122,21 @@ public class Library
 	// returns all of the music albums by the specified band
 	public Collection<Item> musicByBand(String band)
 	{
-		return null;
+		return byBandName.get(band);
 	}
 	
 	// returns all of the music albums by the specified musician
 	public Collection<Item> musicByMusician(String musician)
 	{
-		return null;
+		return byBandMembers.get(musician);
 	}
 	
 	// returns all of the music albums in the library
 	public Collection<Item> musicAlbums()
 	{
-		return null;
+		List<Item> ret = new ArrayList<Item>();
+		ret.addAll(albums);
+		return ret;
 	}
 	
 	// movie-related methods
@@ -138,6 +146,9 @@ public class Library
 	{
 		Movie amovie = new Movie(title, director, nScenes, keywords);
 		movies.add(amovie);
+		
+		hashByAttribute(byDirector, amovie, director);
+		
 		return amovie;
 	}
 
@@ -145,48 +156,67 @@ public class Library
 	public void addCast(Item movie, String... members)
 	{
 		movie.addPeople(members);
+		hashByAttribute(byCastMember, movie, members);
 	}
 
 	// removes a movie from the library
 	public boolean removeMovie(String title)
 	{
-		return false;
+		Item movieToRemove = new Movie();
+		if(items.containsKey(title))
+		{
+			movieToRemove = items.remove(title);
+			List<String> keywords = new ArrayList<String>(movieToRemove.getKeyWords());
+			List<Item> itemsInKeywords = new ArrayList<Item>();
+			for(String k : keywords)
+			{
+				itemsInKeywords = byKeyword.get(k);
+				for (Item i : itemsInKeywords)
+				{
+					if(i.book)
+					{
+						itemsInKeywords.remove(i);
+					}
+				}
+				byKeyword.put(k, itemsInKeywords);
+			}
+		}
+		else
+			return false;
+		return true;
 	}
 	
 	// returns all of the movies by the specified director
 	public Collection<Item> moviesByDirector(String director)
 	{
-		return null;
+		return byDirector.get(director);
 	}
 	
 	// returns all of the movies by the specified actor
 	public Collection<Item> moviesByActor(String actor)
 	{
-		return null;
+		return byCastMember.get(actor);
 	}
 	
 	// returns all of the movies in the library
 	public Collection<Item> movies()
 	{
-		return null;
+		List<Item> someMovies = new ArrayList<Item>();
+		someMovies.addAll(movies);
+		return someMovies;
 	}	
 	
-	private void addByKeyword(Item item, String...keywords)
+
+	private void hashByAttribute(Map<String, List<Item>> listby, Item item, String...keys)
 	{
-		//Adds to a HashMap sorted by keywords
-		List<Item> bookKeywords = new ArrayList<Item>();
-		for (String k : keywords)
+		List<Item> value = new ArrayList<Item>();
+		for (String k : keys)
 		{
-			if(byKeyword.containsKey(k))
-				bookKeywords = byKeyword.get(k);
-			
-			bookKeywords.add(item);
-			byKeyword.put(k, bookKeywords);
+			if(listby.containsKey(k))
+				value = listby.get(k);
+			value.add(item);
+			listby.put(k, value);
 		}
-	}
-	
-	private void hashByAttribute(Item item, String att)
-	{
-		
+
 	}
 }

@@ -44,8 +44,8 @@ class Book
 	public void print(PrintStream out)
 	{
 		out.println("-Book-");
-		out.printf("author: %s", author);
-		out.printf("# pages: %d", pages);
+		out.printf("author: %s%n", author);
+		out.printf("# pages: %d%n", pages);
 		super.print(out);
 	}
 
