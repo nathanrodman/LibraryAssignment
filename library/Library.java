@@ -7,9 +7,10 @@ public class Library
 {
 	// general methods
 	private List<Item> items = new ArrayList<Item>();
-	private TreeSet<Book> books = new TreeSet<Book>();
-	private TreeSet<MusicAlbum> albums = new TreeSet<MusicAlbum>();
-	private TreeSet<Movie> movies = new TreeSet<Movie>();
+	private List<Book> books = new ArrayList<Book>();
+	private List<MusicAlbum> albums = new ArrayList<MusicAlbum>();
+	private List<Movie> movies = new ArrayList<Movie>();
+	private Map<String, List<Item>> byKeyword = new HashMap<String, List<Item>>();
 	
 	
 	// returns all of the items which have the specified keyword
@@ -39,6 +40,10 @@ public class Library
 	{
 		Book book = new Book(title, author, nPages, keywords);
 		books.add(book);
+		
+		//Adds to a HashMap sorted by keywords
+		addByKeyword(book, keywords);
+		
 		return book;
 	}
 	
@@ -61,13 +66,14 @@ public class Library
 	public Collection<Item> booksByAuthor(String author)
 	{
 		List<Item> byAuthor = new ArrayList<Item>();
+		Map<String, List<Item>> containsAuthor = new HashMap<String, List<Item>>();
 		for (Book b : books)
 		{
-			if(b.getAuthor() == author)
-			{
-				byAuthor.add(b);
-			}
+			String anAuthor = b.getAuthor();
 		}
+				
+		
+
 		return byAuthor;
 	}
 	
@@ -76,6 +82,7 @@ public class Library
 	{
 		List<Item> allBooks = new ArrayList<Item>();
 		allBooks.addAll(books);
+
 		
 		return allBooks;
 	}
@@ -87,6 +94,10 @@ public class Library
 	{
 		MusicAlbum album = new MusicAlbum(title, band, nSongs, keywords);
 		albums.add(album);
+	
+		//Adds to a HashMap sorted by keywords
+		addByKeyword(album, keywords);
+		
 		return album;
 	}
 
@@ -159,4 +170,23 @@ public class Library
 	{
 		return null;
 	}	
+	
+	private void addByKeyword(Item item, String...keywords)
+	{
+		//Adds to a HashMap sorted by keywords
+		List<Item> bookKeywords = new ArrayList<Item>();
+		for (String k : keywords)
+		{
+			if(byKeyword.containsKey(k))
+				bookKeywords = byKeyword.get(k);
+			
+			bookKeywords.add(item);
+			byKeyword.put(k, bookKeywords);
+		}
+	}
+	
+	private void hashByAttribute(Item item, String att)
+	{
+		
+	}
 }

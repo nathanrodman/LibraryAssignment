@@ -10,7 +10,7 @@ import java.util.*;
 public abstract class Item
 {
 	private String title = new String();
-	private List<String> keywords = new ArrayList<String>();
+	private Set<String> keywords = new HashSet<String>();
 	private List<String> people = new ArrayList<String>();
 	protected Boolean movie = false;
 	protected Boolean book = false;
@@ -46,19 +46,14 @@ public abstract class Item
 			keywords.add(s);
 	}
 	
-	public List<String> getKeyWords()
+	public Collection<String> getKeyWords()
 	{
 		return keywords;
 	}
 	
 	public Boolean containsKeyWord(String keyword)
 	{
-		for(String s : keywords)
-		{
-			if (s == keyword)
-				return true;
-		}
-		return false;
+		return keywords.contains(keyword);
 	}
 	
 	public void print(PrintStream out)
