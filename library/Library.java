@@ -6,18 +6,18 @@ import java.util.*;
 public class Library
 {
 	// general methods
-	private Map<String, Item> items = new HashMap<String, Item>();
+	private Map<String, Item> items = new TreeMap<String, Item>();
 	private List<Book> books = new ArrayList<Book>();
 	private List<MusicAlbum> albums = new ArrayList<MusicAlbum>();
 	private List<Movie> movies = new ArrayList<Movie>();
 	
 	// HashMaps by certain key values
-	private Map<String, List<Item>> byKeyword = new HashMap<String, List<Item>>();
-	private Map<String, List<Item>> byAuthor = new HashMap<String, List<Item>>();
-	private Map<String, List<Item>> byBandName = new HashMap<String, List<Item>>();
-	private Map<String, List<Item>> byBandMembers = new HashMap<String, List<Item>>();
-	private Map<String, List<Item>> byDirector = new HashMap<String, List<Item>>();
-	private Map<String, List<Item>> byCastMember = new HashMap<String, List<Item>>();
+	private Map<String, List<Item>> byKeyword = new TreeMap<String, List<Item>>();
+	private Map<String, List<Item>> byAuthor = new TreeMap<String, List<Item>>();
+	private Map<String, List<Item>> byBandName = new TreeMap<String, List<Item>>();
+	private Map<String, List<Item>> byBandMembers = new TreeMap<String, List<Item>>();
+	private Map<String, List<Item>> byDirector = new TreeMap<String, List<Item>>();
+	private Map<String, List<Item>> byCastMember = new TreeMap<String, List<Item>>();
 	
 	
 	// returns all of the items which have the specified keyword
@@ -54,34 +54,13 @@ public class Library
 		if(items.containsKey(title))
 		{
 			bookToRemove = items.remove(title);
-			for(String k : bookToRemove.getKeyWords())
-			{
-				List<Item> itemsbykeyword = new ArrayList<Item>();
-				itemsbykeyword = byKeyword.remove(k);
-				for (Item i : itemsbykeyword)
-				{
-					if(i.getTitle() == bookToRemove.getTitle())
-						itemsbykeyword.remove(i);
-					if(!itemsbykeyword.isEmpty())
-						byKeyword.put(k, itemsbykeyword);
-				}
-				
-			}
-			//Removing from the byAuthor list
-			String author = new String(((Book) bookToRemove).getAuthor());
-			List<Item> booksbyauthor = new ArrayList<Item>();
-			booksbyauthor = byAuthor.remove(author);
-			for(Item i : booksbyauthor)
-			{
-				if(i == bookToRemove)
-					booksbyauthor.remove(i);
-			}
-			byAuthor.put(author, booksbyauthor);
-			
+			removeFromHashMap(byKeyword, bookToRemove, bookToRemove.getKeyWords());
+			removeFromHashMap(byAuthor, bookToRemove, ((Book) bookToRemove).getAuthor());
+			books.remove(bookToRemove);
+			return true;
 		}
 		else
 			return false;
-		return true;
 	}
 	
 	// returns all of the books by the specified author
@@ -125,7 +104,18 @@ public class Library
 	// removes a music album from the library
 	public boolean removeMusicAlbum(String title)
 	{
-		return false;
+		Item remove = new MusicAlbum();
+		if(items.containsKey(title))
+		{
+			remove = items.remove(title);
+			removeFromHashMap(byBandName, remove, ((MusicAlbum) remove).getBandName());
+			removeFromHashMap(byBandMembers, remove, remove.getPeople());
+			removeFromHashMap(byKeyword, remove, remove.getKeyWords());
+			albums.remove(remove);
+			return true;
+		}
+		else
+			return false;
 	}
 
 	// returns all of the music albums by the specified band
@@ -144,6 +134,7 @@ public class Library
 	public Collection<Item> musicAlbums()
 	{
 		List<Item> ret = new ArrayList<Item>();
+		Collections.sort(albums, TITLE);
 		ret.addAll(albums);
 		return ret;
 	}
@@ -175,24 +166,14 @@ public class Library
 		if(items.containsKey(title))
 		{
 			movieToRemove = items.remove(title);
-			List<String> keywords = new ArrayList<String>(movieToRemove.getKeyWords());
-			List<Item> itemsInKeywords = new ArrayList<Item>();
-			for(String k : keywords)
-			{
-				itemsInKeywords = byKeyword.get(k);
-				for (Item i : itemsInKeywords)
-				{
-					if(i.movie)
-					{
-						itemsInKeywords.remove(i);
-					}
-				}
-				byKeyword.put(k, itemsInKeywords);
-			}
+			removeFromHashMap(byKeyword, movieToRemove, movieToRemove.getKeyWords());
+			removeFromHashMap(byDirector, movieToRemove, ((Movie) movieToRemove).getDirector());
+			removeFromHashMap(byCastMember, movieToRemove, movieToRemove.getPeople());
+			movies.remove(movieToRemove);
+			return true;
 		}
 		else
 			return false;
-		return true;
 	}
 	
 	// returns all of the movies by the specified director
@@ -211,6 +192,7 @@ public class Library
 	public Collection<Item> movies()
 	{
 		List<Item> someMovies = new ArrayList<Item>();
+		Collections.sort(movies, TITLE);
 		someMovies.addAll(movies);
 		return someMovies;
 	}	
@@ -218,14 +200,81 @@ public class Library
 
 	private void hashByAttribute(Map<String, List<Item>> listby, Item item, String...keys)
 	{
-		List<Item> value = new ArrayList<Item>();
 		for (String k : keys)
 		{
+			List<Item> value = new ArrayList<Item>();
 			if(listby.containsKey(k))
-				value = listby.get(k);
+				value = listby.remove(k);
 			value.add(item);
 			listby.put(k, value);
 		}
 
 	}
+	
+	private Boolean removeFromHashMap(Map<String, List<Item>> listby, Item item, String...key)
+	{
+		int j = listby.size();
+		String title = item.getTitle();
+		for(String k : key)
+		{
+			List<Item> inList = new ArrayList<Item>(listby.remove(k));
+			if(inList.size() == 1)
+			{
+				inList.remove(0);
+				return true;
+			}
+			Iterator<Item> i = inList.iterator();
+			int index = 0;
+			while(i.hasNext())
+			{
+				Item toRemove = i.next();
+				if(toRemove.getTitle() == title)
+					index = inList.indexOf(toRemove);
+			}
+			inList.remove(index);
+			listby.put(k, inList);
+		}
+		if (j > listby.size())
+			return true;
+		else
+			return false;
+	}
+	
+	private Boolean removeFromHashMap(Map<String, List<Item>> listby, Item item, Collection<String> key)
+	{
+		int j = listby.size();
+		String title = item.getTitle();
+		for(String k : key)
+		{
+			List<Item> inList = new ArrayList<Item>(listby.remove(k));
+			if(inList.size() == 1)
+			{
+				inList.remove(0);
+				return true;
+			}
+			Iterator<Item> i = inList.iterator();
+			int index = 0;
+			while(i.hasNext())
+			{
+				Item toRemove = i.next();
+				if(toRemove.getTitle() == title)
+					index = inList.indexOf(toRemove);
+			}
+			inList.remove(index);
+			listby.put(k, inList);
+		}
+		if (j > listby.size())
+			return true;
+		else
+			return false;
+	}
+	
+	public static Comparator<Item> TITLE = new Comparator<Item>() {
+	    @Override
+	    public int compare(Item o1, Item o2) {
+	        return o1.getTitle().compareTo(o2.getTitle());
+	    }
+	};
+
 }
+

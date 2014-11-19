@@ -47,4 +47,9 @@ class Movie
 		super.print(out);
 	}
 	
+	public String getDirector()
+	{
+		return director;
+	}
+	
 }
